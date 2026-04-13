@@ -1,37 +1,43 @@
 :root {
-    /* Dlaždice */
-    --tile-high:   #ffd43b;
-    --tile-low:    #eaddd7;
-    --tile-normal: #fd7e14;
-    --tile-bg:     #e9ecef;
 
-    /* Hra */
-    --game-bg:    #ffffff;
-    --game-score: #eebefa;
+    --tile-high:       #ffd43b;
+    --tile-low:        #eaddd7;
+    --tile-normal:     #fd7e14;
+    --tile-empty:      #ced4da;
+    --tile-background: #e9ecef;
 
-    /* Stavy */
+
+    --game-background: #ffffff;
+    --game-score:      #eebefa;
+
+
     --state-lose: #9775fa;
     --state-win:  #fcc2d7;
 
-    /* Tlačítka */
+
     --btn-new-game:   #40c057;
     --btn-play-again: #fa5252;
     --btn-restart:    #ffa94d;
 
-    /* Typografie – systémové písmo, nulový font-blocking */
-    --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
 
-    /* Rozestupy */
+    --font-sans:   system-ui, -apple-system, "Segoe UI", sans-serif;
     --radius-tile: 6px;
     --radius-card: 12px;
     --shadow-tile: 0 2px 6px rgba(0, 0, 0, 0.15);
     --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.10);
+
+
+    --accent:        #fd7e14;
+    --accent-bg:     #fff4ec;
+    --accent-border: #ffa94d;
+    --border:        #e9ecef;
+    --shadow:        0 4px 16px rgba(0, 0, 0, 0.12);
+    --social-bg:     #f1f3f5;
+    --text-h:        #1a1a1a;
 }
 
-/* ── Reset ──────────────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
+
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -39,14 +45,12 @@
 
 body {
     font-family: var(--font-sans);
-    background-color: var(--game-bg);
+    background-color: var(--game-background);
     color: #1a1a1a;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
 }
 
-/* ── Sdílené tlačítko ───────────────────────────────────────────────────── */
 .btn {
     border: none;
     cursor: pointer;
@@ -59,18 +63,10 @@ body {
     box-shadow: var(--shadow-card);
     transition: filter 150ms ease, transform 150ms ease;
 }
-
-.btn:hover  { filter: brightness(1.1); }
-.btn:active { transform: scale(0.95); }
-.btn:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-}
+.btn:hover         { filter: brightness(1.1); }
+.btn:active        { transform: scale(0.95); }
+.btn:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 
 .btn-new-game   { background-color: var(--btn-new-game); }
 .btn-play-again { background-color: var(--btn-play-again); }
 .btn-restart    { background-color: var(--btn-restart); }
-
-/* ── Overlay stavy ──────────────────────────────────────────────────────── */
-.overlay-lose { background-color: rgb(151 117 250 / 0.85); }
-.overlay-win  { background-color: rgb(252 194 215 / 0.85); }

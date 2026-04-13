@@ -1,94 +1,74 @@
 import { useState } from 'react'
-
 import './App.css'
+import { Header } from './components/Header'
+import { ScoreBoard } from './components/ScoreBoard'
+import { Board } from './components/Board'
+import type { TileData } from './components/Board'
 
-function GameBoard() {
-    return (
-        <div className="w-full aspect-square bg-tile-bg rounded-card shadow-card
-                    grid grid-cols-4 gap-2 p-2">
-            {Array.from({ length: 16 }).map((_, i) => (
-                <div key={i} className="rounded-tile bg-tile-low shadow-tile
-                                flex items-center justify-center
-                                text-lg font-bold text-gray-600
-                                transition-all duration-150" />
-            ))}
-        </div>
-    );
-}
+const PLACEHOLDER_TILES: TileData[] = [
+    { id: 1, value: 2,   row: 0, col: 0 },
+    { id: 2, value: 8,   row: 0, col: 2 },
+    { id: 3, value: 16,  row: 1, col: 1 },
+    { id: 4, value: 128, row: 2, col: 3 },
+]
 
-function ScoreBox({ label, value }: { label: string; value: number }){
-    return(
-        <div className="flex flex-col items-center justify-center
-                min-w-[56px] px-3 py-1 rounded-card bg-game-score shadow-card">
-            <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
-                {label}
-                  </span>
-            <span className="text-base md:text-lg font-bold text-gray-700">
-                {value}
-      </span>
-        </div>)
-}
 export function App() {
-    const [score] = useState(0);
-    const [best] = useState(0);
+    const [score] = useState(0)
+    const [best]  = useState(0)
+
+    function handleNewGame() {
+
+
+        console.log('Nová hra')
+    }
 
     return (
-        <div className="min-h-screen bg-game-bg flex flex-col font-sans">
-            {
+        <div style={{
+            minHeight: '100svh',
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#ffffff',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+        }}>
 
-            }
-            <header className="w-full px-4 py-3 md:py-4
-                         flex items-center justify-between
-                         bg-white shadow-sm">
-                <h1 className="text-2xl md:text-3xl font-bold text-tile-normal tracking-tight">
-                    2048</h1>
+            <Header onNewGame={handleNewGame} />
 
-                <div className="flex gap-2">
-                    <ScoreBox label="SCORE" value={score}/>
-                    <ScoreBox label="BEST" value={best}/>
-                </div>
-            </header>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '0.75rem 1rem 0' }}>
+                <ScoreBoard score={score} best={best} />
+            </div>
 
-            <main className="flex-1 flex flex-col items-center
-                       px-4 py-4 md:px-8 md:py-6 lg:py-10">
-                <div className="w-full max-w-sm md:max-w-md flex flex-col gap-4">
+            <main style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '1rem',
+            }}>
+                <div style={{
+                    width: '100%',
+                    maxWidth: '360px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                }}>
+                    <Board tiles={PLACEHOLDER_TILES} />
 
-                    <div className="flex gap-2">
-                        <button
-                            className="flex-1 py-2 rounded-card font-semibold text-white text-sm
-                         bg-btn-newGame
-                         hover:brightness-110 active:scale-95
-                         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-btn-newGame
-                         transition-all duration-150 shadow-card"
-                        >
-                            New game
-                        </button>
-                        <button
-                            className="flex-1 py-2 rounded-card font-semibold text-white text-sm
-                         bg-btn-restart
-                         hover:brightness-110 active:scale-95
-                         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-btn-restart
-                         transition-all duration-150 shadow-card"
-                        >
-                            Restart
-                        </button>
-                    </div>
-                    <GameBoard/>
-
-                    <p className="text-center text-xs text-gray-400">
+                    <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#aaa' }}>
                         ← → ↑ ↓ &nbsp;|&nbsp; swipe
                     </p>
-
                 </div>
             </main>
 
-            <footer className="w-full px-4 py-3 text-center text-xs text-gray-400">
+            <footer style={{
+                padding: '0.75rem 1rem',
+                textAlign: 'center',
+                fontSize: '0.75rem',
+                color: '#bbb',
+            }}>
                 Posouvej dlaždice a spoj je — dosáhni čísla&nbsp;2048!
             </footer>
 
-
         </div>
-
     )
 }
 
