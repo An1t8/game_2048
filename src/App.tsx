@@ -1,26 +1,29 @@
-import { useState } from 'react'
 import './App.css'
+import { useCallback } from 'react'
+import { useGame } from './hooks/useGame'
+import { useKeyboard } from './hooks/useKeyboard'
+import { useSwipe } from './hooks/useSwipe'
 import { Header } from './components/Header'
 import { ScoreBoard } from './components/ScoreBoard'
 import { Board } from './components/Board'
+import { GameOverlay } from './components/GameOverlay'
+import type { Direction } from './types'
 import type { TileData } from './components/Board'
 
-const PLACEHOLDER_TILES: TileData[] = [
-    { id: 1, value: 2,   row: 0, col: 0 },
-    { id: 2, value: 8,   row: 0, col: 2 },
-    { id: 3, value: 16,  row: 1, col: 1 },
-    { id: 4, value: 128, row: 2, col: 3 },
-]
-
 export function App() {
-    const [score] = useState(0)
-    const [best]  = useState(0)
+    const { board, score, best, status, move, restart } = useGame()
+    const handleMove = useCallback((dir: Direction) => move(dir), [move])
+    useKeyboard(handleMove)
+    useSwipe(handleMove)
 
-    function handleNewGame() {
-
-
-        console.log('Nová hra')
-    }
+    const tiles: TileData[] = board
+        .map((value, index) => ({
+            id: index,
+            value,
+            row: Math.floor(index / 4),
+            col: index % 4,
+        }))
+        .filter(tile => tile.value !== 0)
 
     return (
         <div style={{
@@ -30,8 +33,7 @@ export function App() {
             backgroundColor: '#ffffff',
             fontFamily: 'system-ui, -apple-system, sans-serif',
         }}>
-
-            <Header onNewGame={handleNewGame} />
+            <Header onNewGame={restart} />
 
             <div style={{ display: 'flex', justifyContent: 'center', padding: '0.75rem 1rem 0' }}>
                 <ScoreBoard score={score} best={best} />
@@ -50,8 +52,17 @@ export function App() {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '1rem',
+                    position: 'relative',
                 }}>
-                    <Board tiles={PLACEHOLDER_TILES} />
+                    <Board tiles={tiles} />
+
+                    {status !== 'playing' && (
+                        <GameOverlay
+                            type={status === 'won' ? 'win' : 'lose'}
+                            score={score}
+                            onRestart={restart}
+                        />
+                    )}
 
                     <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#aaa' }}>
                         ← → ↑ ↓ &nbsp;|&nbsp; swipe
@@ -67,7 +78,6 @@ export function App() {
             }}>
                 Posouvej dlaždice a spoj je — dosáhni čísla&nbsp;2048!
             </footer>
-
         </div>
     )
 }
