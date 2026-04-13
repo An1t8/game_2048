@@ -4,6 +4,8 @@ interface TileProps {
     value: number;
     row: number;
     col: number;
+    cellSize: number;
+    gap: number;
 }
 
 function getTileColor(value: number): { bg: string; color: string } {
@@ -18,15 +20,18 @@ function getFontSize(value: number): string {
     return "1.5rem";
 }
 
-export function Tile({ value, row, col }: TileProps) {
+export function Tile({ value, row, col, cellSize, gap }: TileProps) {
     const { bg, color } = getTileColor(value);
 
     return (
         <div
             aria-label={`Tile ${value}`}
             style={{
-                gridRow: row + 1,
-                gridColumn: col + 1,
+                position: "absolute",
+                left:   `${gap + col * (cellSize + gap)}%`,
+                top:    `${gap + row * (cellSize + gap)}%`,
+                width:  `${cellSize}%`,
+                height: `${cellSize}%`,
                 backgroundColor: bg,
                 color,
                 borderRadius: "6px",
@@ -37,6 +42,7 @@ export function Tile({ value, row, col }: TileProps) {
                 fontWeight: 800,
                 fontSize: getFontSize(value),
                 animation: "pop 120ms ease-out",
+                transition: "left 100ms ease, top 100ms ease",
             }}
         >
             {value}
