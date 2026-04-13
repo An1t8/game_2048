@@ -12,6 +12,9 @@ interface BoardProps {
     tiles: TileData[];
 }
 
+const GAP = 2;
+const CELL = (100 - GAP * 5) / 4;
+
 export function Board({ tiles }: BoardProps) {
     return (
         <div style={{
@@ -21,23 +24,28 @@ export function Board({ tiles }: BoardProps) {
             backgroundColor: theme.tile.background,
             borderRadius: "12px",
             boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "0.5rem",
-            padding: "0.5rem",
         }}>
 
-            {Array.from({ length: 16 }).map((_, i) => (
-                <div key={i} style={{
-                    backgroundColor: theme.tile.low,
-                    borderRadius: "6px",
-                    opacity: 0.5,
-                }} />
-            ))}
+            {Array.from({ length: 16 }).map((_, i) => {
+                const row = Math.floor(i / 4);
+                const col = i % 4;
+                return (
+                    <div key={i} style={{
+                        position: "absolute",
+                        left:   `${GAP + col * (CELL + GAP)}%`,
+                        top:    `${GAP + row * (CELL + GAP)}%`,
+                        width:  `${CELL}%`,
+                        height: `${CELL}%`,
+                        backgroundColor: theme.tile.low,
+                        borderRadius: "6px",
+                        opacity: 0.5,
+                    }} />
+                );
+            })}
 
 
             {tiles.map((tile) => (
-                <Tile key={tile.id} {...tile} />
+                <Tile key={tile.id} {...tile} cellSize={CELL} gap={GAP} />
             ))}
         </div>
     );
