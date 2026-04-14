@@ -10,15 +10,7 @@ interface GameOverlayProps {
     onContinue?: () => void;
 }
 
-function OverlayButton({
-                           label,
-                           bg,
-                           onClick,
-                       }: {
-    label: string;
-    bg: string;
-    onClick: () => void;
-}) {
+function OverlayButton({ label, bg, onClick }: { label: string; bg: string; onClick: () => void }) {
     const [hover, setHover] = useState(false);
     const [active, setActive] = useState(false);
 
@@ -51,7 +43,9 @@ function OverlayButton({
 
 export function GameOverlay({ type, score, onRestart, onContinue }: GameOverlayProps) {
     const isWin = type === "win";
-    const overlayBg = isWin
+
+    const accentColor = isWin ? "#40c057" : "#fa5252";
+    const overlayBg   = isWin
         ? `${theme.states.winBackground}DD`
         : `${theme.states.loseBackground}DD`;
 
@@ -73,6 +67,7 @@ export function GameOverlay({ type, score, onRestart, onContinue }: GameOverlayP
             <div style={{
                 background: theme.game.background,
                 borderRadius: "12px",
+                border: `3px solid ${accentColor}`,
                 boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
                 padding: "1.5rem 2rem",
                 display: "flex",
@@ -82,8 +77,8 @@ export function GameOverlay({ type, score, onRestart, onContinue }: GameOverlayP
                 minWidth: "180px",
                 animation: "slideUp 250ms ease-out",
             }}>
-                <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#333", margin: 0 }}>
-                    {isWin ? "Win" : "Game Over"}
+                <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: accentColor, margin: 0 }}>
+                    {isWin ? "Winner!" : "Game Over"}
                 </h2>
 
                 <p style={{ fontSize: "1rem", color: "#555", margin: 0 }}>
