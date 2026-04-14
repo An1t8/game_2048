@@ -37,7 +37,7 @@ export function Header({ onNewGame }: HeaderProps) {
                 onMouseUp={() => setActive(false)}
                 aria-label="Spustit novou hru"
                 style={{
-                    backgroundColor: theme.buttons.newGame,
+                    backgroundColor: theme.buttons.restart,
                     color: "#fff",
                     border: "none",
                     borderRadius: "12px",
@@ -51,7 +51,7 @@ export function Header({ onNewGame }: HeaderProps) {
                     transition: "filter 150ms ease, transform 150ms ease",
                 }}
             >
-                New Game
+                Restart
             </button>
         </header>
     );
