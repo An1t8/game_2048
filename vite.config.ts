@@ -10,7 +10,8 @@ export default defineConfig(({ command }) => ({
         react(),
         VitePWA({
             registerType: 'autoUpdate',
-            manifest: false
+            manifest: false,
+            base: "/game_2048/",
         })
     ]
 }))
