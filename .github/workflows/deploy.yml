@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - week-3-PWA-localStorage
+      - main
 
 jobs:
   deploy:
