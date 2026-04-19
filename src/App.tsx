@@ -11,7 +11,7 @@ import type { Direction } from './types'
 import type { TileData } from './components/Board'
 
 export function App() {
-    const { board, score, best, status, move, restart } = useGame()
+    const { board, score, best, status, move, restart, continueGame } = useGame()
     const handleMove = useCallback((dir: Direction) => move(dir), [move])
     useKeyboard(handleMove)
     useSwipe(handleMove)
@@ -61,6 +61,7 @@ export function App() {
                             type={status === 'won' ? 'win' : 'lose'}
                             score={score}
                             onRestart={restart}
+                            onContinue={continueGame}
                         />
                     )}
 
