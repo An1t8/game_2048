@@ -16,9 +16,11 @@ export function useGame() {
     const [score, setScore] = useState(0);
     const [best, setBest] = useState(getBestScore);
     const [status, setStatus] = useState<GameStatus>('playing');
+    const [wonAcknowledged, setWonAcknowledged] = useState(false);
 
     const move = useCallback((direction: Direction) => {
-        if (status !== 'playing') return;
+
+        if (status === 'lost') return;
 
         setBoard(prev => {
             const { newBoard, score: gained } = moveBoard(prev, direction);
@@ -39,18 +41,27 @@ export function useGame() {
 
             const withTile = addRandomTile(newBoard);
 
-            if (hasWon(withTile)) setStatus('won');
-            else if (!canMove(withTile)) setStatus('lost');
+            if (!wonAcknowledged && hasWon(withTile)) {
+                setStatus('won');
+            } else if (!canMove(withTile)) {
+                setStatus('lost');
+            }
 
             return withTile;
         });
-    }, [status]);
+    }, [status, wonAcknowledged]);
+
+    const continueGame = useCallback(() => {
+        setWonAcknowledged(true);
+        setStatus('playing');
+    }, []);
 
     const restart = useCallback(() => {
         setBoard(initBoard());
         setScore(0);
         setStatus('playing');
+        setWonAcknowledged(false);
     }, []);
 
-    return { board, score, best, status, move, restart };
+    return { board, score, best, status, move, restart, continueGame };
 }
