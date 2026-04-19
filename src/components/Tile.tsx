@@ -41,7 +41,6 @@ export function Tile({ value, row, col, cellSize, gap }: TileProps) {
                 justifyContent: "center",
                 fontWeight: 800,
                 fontSize: getFontSize(value),
-                animation: "pop 120ms ease-out",
                 transition: "left 100ms ease, top 100ms ease",
             }}
         >

@@ -68,13 +68,19 @@ export function addRandomTile(board: Board): Board {
 
 export function canMove(board: Board): boolean {
     if (board.includes(0)) return true;
+
     for (let r = 0; r < 4; r++) {
-        for (let c = 0; c < 4; c++) {
-            const i = r * 4 + c;
-            if (c < 3 && board[i] === board[i + 1]) return true;
-            if (r < 3 && board[i] === board[i + 4]) return true;
+        for (let c = 0; c < 3; c++) {
+            if (board[r * 4 + c] === board[r * 4 + c + 1]) return true;
         }
     }
+
+    for (let c = 0; c < 4; c++) {
+        for (let r = 0; r < 3; r++) {
+            if (board[r * 4 + c] === board[(r + 1) * 4 + c]) return true;
+        }
+    }
+
     return false;
 }
 
