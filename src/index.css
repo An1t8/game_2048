@@ -80,3 +80,9 @@ body {
 .btn-new-game   { background-color: var(--btn-new-game); }
 .btn-play-again { background-color: var(--btn-play-again); }
 .btn-restart    { background-color: var(--btn-restart); }
+
+@keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    60%  { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+}
