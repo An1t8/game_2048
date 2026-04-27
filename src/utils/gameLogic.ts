@@ -85,5 +85,5 @@ export function canMove(board: Board): boolean {
 }
 
 export function hasWon(board: Board): boolean {
-    return board.includes(2048);
+    return board.includes(64);
 }
