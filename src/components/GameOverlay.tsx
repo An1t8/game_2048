@@ -58,11 +58,11 @@ export function GameOverlay({ type, score, onRestart, onContinue }: GameOverlayP
             justifyContent: "center",
             backgroundColor: overlayBg,
             borderRadius: "12px",
-            animation: "fadeIn 250ms ease-out",
+
         }}
              role="dialog"
              aria-modal="true"
-             aria-label={isWin ? "Win" : "Game over"}
+             aria-label={isWin ? "Winner!" : "Game over"}
         >
             <div style={{
                 background: theme.game.background,
@@ -75,7 +75,7 @@ export function GameOverlay({ type, score, onRestart, onContinue }: GameOverlayP
                 alignItems: "center",
                 gap: "0.75rem",
                 minWidth: "180px",
-                animation: "slideUp 250ms ease-out",
+
             }}>
                 <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: accentColor, margin: 0 }}>
                     {isWin ? "Winner!" : "Game Over"}
