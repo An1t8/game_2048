@@ -13,6 +13,10 @@ export function useSwipe(onMove: (direction: Direction) => void) {
             touchProcessed.current = false;
         };
 
+        const handleTouchMove = (e: TouchEvent) => {
+            e.preventDefault();
+        };
+
         const handleTouchEnd = (e: TouchEvent) => {
             if (!touchStart.current || touchProcessed.current) return;
 
@@ -20,7 +24,10 @@ export function useSwipe(onMove: (direction: Direction) => void) {
             const dy = e.changedTouches[0].clientY - touchStart.current.y;
             const threshold = 30;
 
-            if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) return;
+            if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) {
+                touchStart.current = null;
+                return;
+            }
 
             if (Math.abs(dx) > Math.abs(dy)) {
                 onMove(dx > 0 ? 'right' : 'left');
@@ -34,10 +41,12 @@ export function useSwipe(onMove: (direction: Direction) => void) {
         };
 
         window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchmove', handleTouchMove, { passive: false });
         window.addEventListener('touchend', handleTouchEnd, { passive: false });
 
         return () => {
             window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchmove', handleTouchMove);
             window.removeEventListener('touchend', handleTouchEnd);
         };
     }, [onMove]);
